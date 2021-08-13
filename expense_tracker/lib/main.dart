@@ -20,6 +20,10 @@ class MyApp extends StatelessWidget {
                 fontFamily: "FiraCode",
                 fontSize: 28,
               ),
+          bodyText1: ThemeData.light().textTheme.bodyText1.copyWith(
+                fontWeight: FontWeight.bold,
+                fontFamily: "FiraCode",
+              ),
         ),
       ),
       home: HomePage('Expense Tracker'),

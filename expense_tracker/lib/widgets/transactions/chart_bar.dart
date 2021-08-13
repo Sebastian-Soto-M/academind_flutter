@@ -12,14 +12,18 @@ class TransactionChartBar extends StatelessWidget {
     return Container(
       child: Column(
         children: [
-          FittedBox(
-            child: Text('\$${bar.current.toStringAsFixed(0)}'),
+          Container(
+            height: 20,
+            child: FittedBox(
+              child: Text('\$${bar.current.toStringAsFixed(0)}'),
+            ),
           ),
           Container(
             height: 80,
             width: barWidth,
             margin: EdgeInsets.symmetric(vertical: 5),
             child: Stack(
+              alignment: AlignmentDirectional.bottomCenter,
               children: [
                 Container(
                   decoration: BoxDecoration(

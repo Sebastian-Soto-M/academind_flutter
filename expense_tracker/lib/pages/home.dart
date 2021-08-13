@@ -4,6 +4,12 @@ import '../widgets/no_content.dart';
 import '../models/transaction.dart';
 import '../widgets/transactions/index.dart';
 
+class MenuItem {
+  final String label;
+  final Function action;
+  MenuItem(this.label, this.action);
+}
+
 class HomePage extends StatefulWidget {
   final String title;
   HomePage(this.title);
@@ -36,38 +42,24 @@ class _HomePageState extends State<HomePage> {
         });
   }
 
-  void _dismissTransaction(DismissDirection direction, int index) {
-    setState(() {
-      switch (direction) {
-        case DismissDirection.endToStart:
-          _transactions.removeAt(index);
-          break;
-        case DismissDirection.startToEnd:
-          _transactions.removeAt(index);
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('You did it!'),
-              backgroundColor: Theme.of(context).primaryColor,
-              elevation: 2,
-              behavior: SnackBarBehavior.floating,
-            ),
-          );
-          break;
-        default:
-      }
-    });
-  }
-
-  void _resetTransactions() {
-    setState(() {
-      _transactions.clear();
-      _transactions.addAll(List.generate(
-          10, (index) => Transaction.create('TRSNCT -> $index', index * 10.0)));
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
+    List<MenuItem> _menuItems = [
+      MenuItem(
+        'Refresh',
+        () => setState(() {
+          _transactions.clear();
+          _transactions.addAll(List.generate(10,
+              (index) => Transaction.create('TRSNCT -> $index', index * 10.0)));
+        }),
+      ),
+      MenuItem(
+        'Clear',
+        () => setState(() {
+          _transactions.clear();
+        }),
+      ),
+    ];
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -75,13 +67,17 @@ class _HomePageState extends State<HomePage> {
         systemOverlayStyle:
             SystemUiOverlayStyle(statusBarColor: Colors.transparent),
         actions: [
-          IconButton(onPressed: _resetTransactions, icon: Icon(Icons.refresh)),
-          IconButton(
-              onPressed: () => setState(() => _transactions.clear()),
-              icon: Icon(Icons.delete)),
           IconButton(
             icon: Icon(Icons.add),
             onPressed: () => _startAddNewTransaction(context),
+          ),
+          PopupMenuButton(
+            itemBuilder: (_) => _menuItems
+                .map((item) =>
+                    PopupMenuItem(value: item, child: Text(item.label)))
+                .toList(),
+            icon: Icon(Icons.more_vert),
+            onSelected: (MenuItem val) => val.action(),
           ),
         ],
       ),
@@ -102,7 +98,7 @@ class _HomePageState extends State<HomePage> {
           Expanded(
             child: _transactions.isEmpty
                 ? SingleChildScrollView(child: NoContentFound('Transactions'))
-                : TransactionList(_transactions, _dismissTransaction),
+                : TransactionList(_transactions, () => setState(() {})),
             flex: 1,
           )
         ],
