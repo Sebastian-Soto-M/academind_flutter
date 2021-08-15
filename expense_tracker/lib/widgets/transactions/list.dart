@@ -13,26 +13,8 @@ class TransactionList extends StatefulWidget {
 }
 
 class _TransactionListState extends State<TransactionList> {
-  void _dismissTransaction(DismissDirection direction, int index) {
-    setState(() {
-      switch (direction) {
-        case DismissDirection.endToStart:
-          widget.transactions.removeAt(index);
-          break;
-        case DismissDirection.startToEnd:
-          widget.transactions.removeAt(index);
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('You did it!'),
-              backgroundColor: Theme.of(context).primaryColor,
-              elevation: 2,
-              behavior: SnackBarBehavior.floating,
-            ),
-          );
-          break;
-        default:
-      }
-    });
+  void _dismissTransaction(int index) {
+    setState(() => widget.transactions.removeAt(index));
     widget.onUpdate();
   }
 
@@ -41,14 +23,6 @@ class _TransactionListState extends State<TransactionList> {
     return ListView.separated(
       itemBuilder: (context, index) => Dismissible(
         background: Container(
-          color: Colors.lime,
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            child: Icon(Icons.check, color: Colors.white),
-          ),
-          alignment: AlignmentDirectional.centerStart,
-        ),
-        secondaryBackground: Container(
           color: Colors.red,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
@@ -63,7 +37,7 @@ class _TransactionListState extends State<TransactionList> {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16),
                 child: Icon(
-                  Icons.delete,
+                  Icons.close,
                   color: Colors.red.shade100,
                 ),
               ),
@@ -73,10 +47,9 @@ class _TransactionListState extends State<TransactionList> {
         ),
         child: TransactionListTile(widget.transactions[index]),
         key: ValueKey(widget.transactions[index].id),
-        onDismissed: (direction) => _dismissTransaction(direction, index),
+        onDismissed: (direction) => _dismissTransaction(index),
         dismissThresholds: {
           DismissDirection.endToStart: 0.5,
-          DismissDirection.startToEnd: 0.2
         },
       ),
       itemCount: widget.transactions.length,
