@@ -1,7 +1,8 @@
+import 'package:deli_meal/models/category.dart';
 import 'package:flutter/material.dart';
 
-import './dummy_data.dart';
-import './category_item.dart';
+import '../configuration/dummy_data.dart';
+import '../widgets/category_item.dart';
 
 class CategoriesScreen extends StatelessWidget {
   @override
@@ -12,20 +13,20 @@ class CategoriesScreen extends StatelessWidget {
       ),
       body: GridView(
         padding: const EdgeInsets.all(25),
-        children: DUMMY_CATEGORIES
-            .map(
-              (catData) => CategoryItem(
-                    catData.title,
-                    catData.color,
-                  ),
-            )
-            .toList(),
-        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
           maxCrossAxisExtent: 200,
           childAspectRatio: 3 / 2,
           crossAxisSpacing: 20,
           mainAxisSpacing: 20,
         ),
+        children: dummyCategories
+            .map(
+              (Category data) => CategoryItem(
+                data.title,
+                data.color,
+              ),
+            )
+            .toList(),
       ),
     );
   }

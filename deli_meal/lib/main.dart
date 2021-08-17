@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import './categories_screen.dart';
+import 'screens/categories_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -12,16 +12,16 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.pink,
         accentColor: Colors.amber,
-        canvasColor: Color.fromRGBO(255, 254, 229, 1),
+        canvasColor: const Color.fromRGBO(255, 254, 229, 1),
         fontFamily: 'Raleway',
         textTheme: ThemeData.light().textTheme.copyWith(
-            body1: TextStyle(
+            bodyText1: const TextStyle(
               color: Color.fromRGBO(20, 51, 51, 1),
             ),
-            body2: TextStyle(
+            bodyText2: const TextStyle(
               color: Color.fromRGBO(20, 51, 51, 1),
             ),
-            title: TextStyle(
+            headline6: const TextStyle(
               fontSize: 20,
               fontFamily: 'RobotoCondensed',
               fontWeight: FontWeight.bold,
