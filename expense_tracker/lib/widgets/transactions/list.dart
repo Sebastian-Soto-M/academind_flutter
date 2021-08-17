@@ -51,6 +51,7 @@ class _TransactionListState extends State<TransactionList> {
         dismissThresholds: {
           DismissDirection.endToStart: 0.5,
         },
+        direction: DismissDirection.endToStart,
       ),
       itemCount: widget.transactions.length,
       physics: BouncingScrollPhysics(),

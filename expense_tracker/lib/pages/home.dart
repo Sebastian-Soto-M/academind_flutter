@@ -1,3 +1,4 @@
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../widgets/no_content.dart';
@@ -42,9 +43,8 @@ class _HomePageState extends State<HomePage> {
         });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    List<MenuItem> _menuItems = [
+  List<MenuItem> get _menuItems {
+    return [
       MenuItem(
         'Refresh',
         () => setState(() {
@@ -60,6 +60,10 @@ class _HomePageState extends State<HomePage> {
         }),
       ),
     ];
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -80,6 +84,21 @@ class _HomePageState extends State<HomePage> {
             onSelected: (MenuItem val) => val.action(),
           ),
         ],
+      ),
+      bottomNavigationBar: CurvedNavigationBar(
+        color: Theme.of(context).primaryColor,
+        backgroundColor: Colors.transparent,
+        animationDuration: Duration(milliseconds: 300),
+        animationCurve: Curves.easeInOut,
+        buttonBackgroundColor: Theme.of(context).primaryColorDark,
+        items: <Widget>[
+          Icon(Icons.add),
+          Icon(Icons.list),
+          Icon(Icons.bar_chart),
+        ],
+        onTap: (index) {
+          //Handle button tap
+        },
       ),
       body: Flex(
         direction: Axis.vertical,

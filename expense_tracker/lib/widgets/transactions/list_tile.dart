@@ -9,8 +9,12 @@ class TransactionListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-        leading:
+        leading: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
             Icon(Icons.label_important, color: Theme.of(context).primaryColor),
+          ],
+        ),
         trailing: Chip(
           backgroundColor: Theme.of(context).accentColor,
           label: Text(('\$${transaction.amount.toStringAsFixed(2)}'),

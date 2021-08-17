@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'pages/home.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations(
+    [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp],
+  );
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -11,8 +18,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Expense Tracker',
       theme: ThemeData(
-        primarySwatch: Colors.deepPurple,
-        accentColor: Colors.purple,
+        accentColor: Colors.deepPurple,
+        primarySwatch: Colors.teal,
         fontFamily: "FiraCode",
         textTheme: TextTheme(
           headline1: ThemeData.light().textTheme.headline1.copyWith(
@@ -24,6 +31,9 @@ class MyApp extends StatelessWidget {
                 fontWeight: FontWeight.bold,
                 fontFamily: "FiraCode",
               ),
+        ),
+        iconTheme: IconThemeData().copyWith(
+          color: Colors.white,
         ),
       ),
       home: HomePage('Expense Tracker'),

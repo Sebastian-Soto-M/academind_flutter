@@ -4,31 +4,32 @@ import 'package:expense_tracker/models/chart_bar.dart';
 class TransactionChartBar extends StatelessWidget {
   final ChartBar bar;
   final DateTime date;
-  final double barWidth;
-  const TransactionChartBar(this.bar, this.date, [this.barWidth = 10.0]);
+  const TransactionChartBar(this.bar, this.date);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
+    return LayoutBuilder(builder: (ctx, constraints) {
+      return Container(
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Container(
-            height: 20,
+            height: constraints.maxHeight * 0.25,
+            margin: EdgeInsets.symmetric(horizontal: 2),
             child: FittedBox(
               child: Text('\$${bar.current.toStringAsFixed(0)}'),
             ),
           ),
           Container(
-            height: 80,
-            width: barWidth,
-            margin: EdgeInsets.symmetric(vertical: 5),
+            width: constraints.maxWidth * 0.2,
+            height: constraints.maxHeight * 0.5,
             child: Stack(
-              alignment: AlignmentDirectional.bottomCenter,
+              alignment: AlignmentDirectional.bottomEnd,
               children: [
                 Container(
                   decoration: BoxDecoration(
                     color: Colors.grey.shade300,
-                    borderRadius: BorderRadius.circular(15),
+                    borderRadius: BorderRadius.circular(50),
                   ),
                 ),
                 FractionallySizedBox(
@@ -36,7 +37,7 @@ class TransactionChartBar extends StatelessWidget {
                     child: Container(
                       decoration: BoxDecoration(
                         color: Theme.of(context).primaryColor,
-                        borderRadius: BorderRadius.circular(15),
+                        borderRadius: BorderRadius.circular(50),
                       ),
                     ))
               ],
@@ -44,7 +45,7 @@ class TransactionChartBar extends StatelessWidget {
           ),
           Text(bar.label),
         ],
-      ),
-    );
+      ));
+    });
   }
 }

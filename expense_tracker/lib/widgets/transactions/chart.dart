@@ -57,6 +57,7 @@ class TransactionChart extends StatelessWidget {
       margin: EdgeInsets.all(20),
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+        height: MediaQuery.of(context).size.height * 0.2,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: chartBars,
