@@ -12,42 +12,40 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'DeliMeals',
       theme: ThemeData(
-        primarySwatch: Colors.pink,
-        accentColor: Colors.amber,
-        canvasColor: Color.fromRGBO(255, 254, 229, 1),
+        primarySwatch: Colors.indigo,
+        accentColor: Colors.pink,
+        canvasColor: Colors.indigo.shade50,
         fontFamily: 'Raleway',
         textTheme: ThemeData.light().textTheme.copyWith(
-            body1: TextStyle(
+            bodyText1: const TextStyle(
               color: Color.fromRGBO(20, 51, 51, 1),
             ),
-            body2: TextStyle(
+            bodyText2: const TextStyle(
               color: Color.fromRGBO(20, 51, 51, 1),
             ),
-            title: TextStyle(
+            headline6: const TextStyle(
               fontSize: 20,
               fontFamily: 'RobotoCondensed',
               fontWeight: FontWeight.bold,
             )),
       ),
-      // home: CategoriesScreen(),
+      darkTheme: ThemeData.dark().copyWith(
+        primaryColor: Colors.indigo.shade700,
+        primaryColorDark: Colors.indigo.shade900,
+        primaryColorLight: Colors.indigo.shade400,
+        accentColor: Colors.pink.shade500,
+      ),
+      themeMode: ThemeMode.dark,
       initialRoute: '/', // default is '/'
-      routes: {
-        '/': (ctx) => CategoriesScreen(),
-        CategoryMealsScreen.routeName: (ctx) => CategoryMealsScreen(),
-        MealDetailScreen.routeName: (ctx) => MealDetailScreen(),
+      routes: <String, Widget Function(BuildContext)>{
+        '/': (BuildContext ctx) => CategoriesScreen(),
+        CategoryMealsScreen.routeName: (BuildContext ctx) =>
+            CategoryMealsScreen(),
+        MealDetailScreen.routeName: (BuildContext ctx) => MealDetailScreen(),
       },
-      onGenerateRoute: (settings) {
-        print(settings.arguments);
-        // if (settings.name == '/meal-detail') {
-        //   return ...;
-        // } else if (settings.name == '/something-else') {
-        //   return ...;
-        // }
-        // return MaterialPageRoute(builder: (ctx) => CategoriesScreen(),);
-      },
-      onUnknownRoute: (settings) {
-        return MaterialPageRoute(
-          builder: (ctx) => CategoriesScreen(),
+      onUnknownRoute: (RouteSettings settings) {
+        return MaterialPageRoute<CategoriesScreen>(
+          builder: (BuildContext ctx) => CategoriesScreen(),
         );
       },
     );
