@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'screens/index.dart';
+import './screens/categories_screen.dart';
+import './screens/category_meals_screen.dart';
+import './screens/meal_detail_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -10,28 +12,43 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'DeliMeals',
       theme: ThemeData(
-        primarySwatch: Colors.indigo,
-        accentColor: Colors.orangeAccent,
-        canvasColor: Colors.grey.shade50,
+        primarySwatch: Colors.pink,
+        accentColor: Colors.amber,
+        canvasColor: Color.fromRGBO(255, 254, 229, 1),
         fontFamily: 'Raleway',
         textTheme: ThemeData.light().textTheme.copyWith(
-            bodyText1: const TextStyle(
+            body1: TextStyle(
               color: Color.fromRGBO(20, 51, 51, 1),
             ),
-            bodyText2: const TextStyle(
+            body2: TextStyle(
               color: Color.fromRGBO(20, 51, 51, 1),
             ),
-            headline6: const TextStyle(
+            title: TextStyle(
               fontSize: 20,
               fontFamily: 'RobotoCondensed',
               fontWeight: FontWeight.bold,
             )),
       ),
-      initialRoute: CategoriesScreen.routeName,
-      routes: <String, Widget Function(BuildContext)>{
-        CategoriesScreen.routeName: (BuildContext ctx) => CategoriesScreen(),
-        CategoryMealsScreen.routeName: (BuildContext ctx) =>
-            CategoryMealsScreen(),
+      // home: CategoriesScreen(),
+      initialRoute: '/', // default is '/'
+      routes: {
+        '/': (ctx) => CategoriesScreen(),
+        CategoryMealsScreen.routeName: (ctx) => CategoryMealsScreen(),
+        MealDetailScreen.routeName: (ctx) => MealDetailScreen(),
+      },
+      onGenerateRoute: (settings) {
+        print(settings.arguments);
+        // if (settings.name == '/meal-detail') {
+        //   return ...;
+        // } else if (settings.name == '/something-else') {
+        //   return ...;
+        // }
+        // return MaterialPageRoute(builder: (ctx) => CategoriesScreen(),);
+      },
+      onUnknownRoute: (settings) {
+        return MaterialPageRoute(
+          builder: (ctx) => CategoriesScreen(),
+        );
       },
     );
   }
